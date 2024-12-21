@@ -44,6 +44,10 @@ void FuelController::updateFuelState(const String &json)
 
     if (currentFuel > 0 && fuelCapacity > 0)
     {
+        if(currentFuel > fuelCapacity){
+           fuelCapacity = currentFuel;
+        }
+
         float percentValue = (currentFuel / fuelCapacity) * 100.0;
         int pwm = map(percentValue, 100, 0, _fuel.getMinPWM(), _fuel.getMaxPWM());
 
@@ -53,8 +57,5 @@ void FuelController::updateFuelState(const String &json)
             _fuel.setCurrentStateFuel(pwm);
         }
     }
-    else
-    {
-        resetPinState();
-    }
+  
 }
